@@ -19,10 +19,10 @@ Route::post('/convert', [CurrencyConverterController::class, 'convert'])->name('
 Route::prefix('currencies')->controller(CurrencyController::class)->group(function () {
     Route::get('/', 'index')->name('currencies.index');
 
-    Route::middleware('auth:sanctum')->group(function () {
+    // Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/', 'store')->name('currencies.store');
         Route::put('/{id}', 'update')->name('currencies.update');
         Route::delete('/{id}', 'destroy')->name('currencies.destroy');
         Route::get('/search', 'search')->name('currencies.search');
-    });
+    // });
 });

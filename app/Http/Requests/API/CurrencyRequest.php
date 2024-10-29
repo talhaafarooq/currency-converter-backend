@@ -18,7 +18,7 @@ class CurrencyRequest extends FormRequest
         return [
             'name' => 'required|string|max:255|unique:currencies',
             'code' => 'required|string|max:10|unique:currencies',
-            'exchange_rate' => 'required|numeric',
+            'exchange_rate_to_usd' => 'required|numeric',
         ];
     }
 }
