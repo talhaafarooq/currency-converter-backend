@@ -7,5 +7,8 @@ use Illuminate\Support\Collection;
 interface CurrencyRepositoryInterface
 {
     public function getAllCurrencies();
-    public function findCurrencyById(int $id);
+    public function createCurrency(array $data);
+    public function updateCurrency($id, array $data);
+    public function deleteCurrency($id);
+    public function searchCurrencies($query);
 }
