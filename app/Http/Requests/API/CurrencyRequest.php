@@ -8,6 +8,7 @@ use Illuminate\Foundation\Http\FormRequest;
 class CurrencyRequest extends FormRequest
 {
     use ValidationTrait;
+
     public function authorize(): bool
     {
         return true;
@@ -15,10 +16,17 @@ class CurrencyRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|max:255|unique:currencies',
-            'code' => 'required|string|max:10|unique:currencies',
+        $rules = [
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:10',
             'exchange_rate_to_usd' => 'required|numeric',
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['name'] .= '|unique:currencies';
+            $rules['code'] .= '|unique:currencies';
+        }
+
+        return $rules;
     }
 }

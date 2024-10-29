@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\CurrencyRequest;
 use App\Http\Requests\API\SearchCurrencyRequest;
 use App\Repositories\Contracts\CurrencyRepositoryInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -14,10 +15,16 @@ class CurrencyController extends Controller
 {
     public function __construct(private CurrencyRepositoryInterface $currencyRepo) {}
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $currencies = $this->currencyRepo->getAllCurrencies();
+            $currencies = null;
+            if($request->type && $request->type == 1)
+            {
+                $currencies = $this->currencyRepo->getAllCurrencies();                
+            }else{
+                $currencies = $this->currencyRepo->getAllpaginatedCurrencies();
+            }
             return $this->sendResponse($currencies, 'Currencies list retrieved successfully.', Response::HTTP_OK);
         } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), MessageEnum::ERROR_MESSAGE, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -33,6 +40,16 @@ class CurrencyController extends Controller
             return $this->sendResponse($currency, 'Currency added successfully.', Response::HTTP_CREATED);
         } catch (\Exception $e) {
             DB::rollBack();
+            return $this->sendError($e->getMessage(), MessageEnum::ERROR_MESSAGE, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    public function show($id)
+    {
+        try {
+            $currencies = $this->currencyRepo->findCurrencyById($id); 
+            return $this->sendResponse($currencies, 'Currency retrieved successfully.', Response::HTTP_OK);
+        } catch (\Exception $e) {
             return $this->sendError($e->getMessage(), MessageEnum::ERROR_MESSAGE, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

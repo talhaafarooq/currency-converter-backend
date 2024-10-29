@@ -21,6 +21,7 @@ Route::prefix('currencies')->controller(CurrencyController::class)->group(functi
 
     // Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/', 'store')->name('currencies.store');
+        Route::get('/{id}', 'show')->name('currencies.show');
         Route::put('/{id}', 'update')->name('currencies.update');
         Route::delete('/{id}', 'destroy')->name('currencies.destroy');
         Route::get('/search', 'search')->name('currencies.search');

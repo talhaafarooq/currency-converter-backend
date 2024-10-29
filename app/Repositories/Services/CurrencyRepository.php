@@ -12,6 +12,11 @@ class CurrencyRepository implements CurrencyRepositoryInterface
         return Currency::all();
     }
 
+    public function getAllpaginatedCurrencies()
+    {
+        return Currency::paginate(12);
+    }
+
     public function createCurrency(array $data){
         return Currency::create($data);
     }
@@ -22,7 +27,7 @@ class CurrencyRepository implements CurrencyRepositoryInterface
         return $currency;
     }
 
-    public function findCurrencyById(int $id)
+    public function findCurrencyById($id)
     {
         return Currency::findOrFail($id);
     }
