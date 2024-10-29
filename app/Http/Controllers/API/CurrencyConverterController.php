@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enums\MessageEnum;
 use App\Http\Controllers\Controller;
 use App\Repositories\Contracts\ConversionRepositoryInterface;
 use App\Http\Requests\API\CurrencyConvertRequest;
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class CurrencyConverterController extends Controller
 {

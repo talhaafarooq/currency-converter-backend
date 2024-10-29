@@ -14,7 +14,7 @@ class CurrencyController extends Controller
 {
     public function __construct(private CurrencyRepositoryInterface $currencyRepo) {}
 
-    public function getCurrencies()
+    public function index()
     {
         try {
             $currencies = $this->currencyRepo->getAllCurrencies();
@@ -24,7 +24,7 @@ class CurrencyController extends Controller
         }
     }
 
-    public function storeCurrency(CurrencyRequest $request)
+    public function store(CurrencyRequest $request)
     {
         DB::beginTransaction(); 
         try {
@@ -37,7 +37,7 @@ class CurrencyController extends Controller
         }
     }
 
-    public function updateCurrency(CurrencyRequest $request, $id)
+    public function update(CurrencyRequest $request, $id)
     {
         DB::beginTransaction(); 
         try {
@@ -50,7 +50,7 @@ class CurrencyController extends Controller
         }
     }
 
-    public function destroyCurrency($id)
+    public function destroy($id)
     {
         DB::beginTransaction(); 
         try {
@@ -63,7 +63,7 @@ class CurrencyController extends Controller
         }
     }
 
-    public function searchCurrency(SearchCurrencyRequest $request)
+    public function search(SearchCurrencyRequest $request)
     {
         try {
             $currencies = $this->currencyRepo->searchCurrencies($request->input('query'));
